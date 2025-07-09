@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+
+{% block title %}My Degrees{% endblock %}
+{% block active_degree %}active{% endblock %}
+
+{% block content %}
+<div class="card shadow p-4 rounded">
+  <h3 class="mb-4 text-primary fw-bold">Educational Qualifications</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>#</th>
+          <th>Degree Name</th>
+          <th>Institute</th>
+          <th>Passing Year</th>
+          <th>CGPA</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for degree in degrees %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ degree.degree_name }}</td>
+          <td>{{ degree.institute }}</td>
+          <td>{{ degree.passing_year }}</td>
+          <td>{{ degree.cgpa }}</td>
+          <td>
+            <a href="{% url 'degree_edit' degree.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+            <a href="{% url 'degree_delete' degree.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+          </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="text-center">No degrees added yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <a href="{% url 'degree_create' %}" class="btn btn-success mt-3">
+    <i class="bi bi-plus-circle"></i> Add New Degree
+  </a>
+</div>
+{% endblock %}

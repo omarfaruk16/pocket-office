@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create CT</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+    <h4>Create Class Test - {{ part.course.name }} (Part {{ part.name }})</h4>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col">
+                <label>CT No</label>
+                <input type="number" name="number" class="form-control" required>
+            </div>
+            <div class="col">
+                <label>Date</label>
+                <input type="date" name="date" class="form-control" value="{{ today }}">
+            </div>
+            <div class="col">
+                <label>Time</label>
+                <input type="text" name="time" class="form-control">
+            </div>
+        </div>
+        <div class="mb-3">
+            <label>Topic</label>
+            <input type="text" name="topic" class="form-control" required>
+        </div>
+        <table class="table table-bordered text-center">
+            <thead class="table-light">
+                <tr><th>ID</th><th>Name</th><th>Status</th><th>Marks</th></tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.student_id }}</td>
+                    <td>{{ student.name }}</td>
+                    <td><input type="checkbox" name="status_{{ student.id }}" value="present" checked></td>
+                    <td><input type="number" step="0.01" name="mark_{{ student.id }}" class="form-control"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success mt-3">Submit</button>
+    </form>
+</body>
+</html>

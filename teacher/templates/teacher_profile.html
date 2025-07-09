@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+{% block title %}My Profile{% endblock %}
+{% block active_personal %}active{% endblock %}
+
+{% block content %}
+<div class="card shadow p-4 rounded">
+  <h3 class="mb-4 text-primary fw-bold">Personal Information</h3>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong>Full Name:</strong> {{ teacher.user.get_full_name }}
+    </div>
+    <div class="col-md-6">
+      <strong>Username:</strong> {{ teacher.user.username }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong>Email:</strong> {{ teacher.user.email }}
+    </div>
+    <div class="col-md-6">
+      <strong>Phone:</strong> {{ teacher.phone }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <strong>Teacher ID:</strong> {{ teacher.teacher_id }}
+    </div>
+    <div class="col-md-6">
+      <strong>Address:</strong> {{ teacher.permanent_address }}
+    </div>
+  </div>
+</div>
+{% endblock %}

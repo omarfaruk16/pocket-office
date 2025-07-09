@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Result Summary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+
+    <h4 class="mb-3">Result Summary</h4>
+    <div class="bg-light p-3 rounded mb-4">
+        <p><strong>Student:</strong> {{ student.name }} ({{ student.student_id }})</p>
+        <p><strong>Course:</strong> {{ part.course.name }}</p>
+        <p><strong>Part:</strong> {{ part.name }}</p>
+    </div>
+
+    <div class="row text-center mb-4">
+        <div class="col-sm-4 mb-2">
+            <div class="p-3 border rounded bg-success text-white">
+                <strong>Total Classes</strong><br>{{ total_classes }}
+            </div>
+        </div>
+        <div class="col-sm-4 mb-2">
+            <div class="p-3 border rounded bg-primary text-white">
+                <strong>Present</strong><br>{{ present_count }}
+            </div>
+        </div>
+        <div class="col-sm-4 mb-2">
+            <div class="p-3 border rounded bg-danger text-white">
+                <strong>Absent</strong><br>{{ absent_count }}
+            </div>
+        </div>
+    </div>
+
+    <h5 class="mt-4">Class Tests</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="table-secondary">
+            <tr>
+                <th>CT No</th>
+                <th>Mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in ct_marks %}
+                <tr>
+                    <td>{{ mark.test.number }}</td>
+                    <td>{{ mark.mark }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="2">No class test records.</td></tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="table-info">
+                <th>Average</th>
+                <th>{{ ct_avg }}</th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <h5 class="mt-4">Exams</h5>
+    <table class="table table-bordered table-striped">
+        <thead class="table-secondary">
+            <tr>
+                <th>Exam Title</th>
+                <th>Mark</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mark in exam_marks %}
+                <tr>
+                    <td>{{ mark.exam.title }}</td>
+                    <td>{{ mark.mark }}</td>
+                </tr>
+            {% empty %}
+                <tr><td colspan="2">No exam records.</td></tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="table-info">
+                <th>Total</th>
+                <th>{{ exam_total }}</th>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+</html>

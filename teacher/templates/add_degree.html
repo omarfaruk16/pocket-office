@@ -1,0 +1,37 @@
+{% extends 'base_profile.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0">Add New Degree</h4>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Degree Name</label>
+                        {{ form.degree_name|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Institute</label>
+                        {{ form.institute|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Passing Year</label>
+                        {{ form.passing_year|add_class:"form-control" }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">CGPA</label>
+                        {{ form.cgpa|add_class:"form-control" }}
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button type="submit" class="btn btn-success">Add Degree</button>
+                    <a href="{% url 'degree_list' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

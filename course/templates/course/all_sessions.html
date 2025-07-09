@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Sessions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .session-class {
+        background-color: #d4edda;
+      } /* green */
+      .session-ct {
+        background-color: #fff3cd;
+      } /* yellow */
+      .session-exam {
+        background-color: #d1ecf1;
+      } /* blue */
+    </style>
+  </head>
+  <body class="container py-4">
+    <h4>All Sessions - {{ part.course.name }} (Part {{ part.name }})</h4>
+    <div class="mb-3">
+      <a
+        href="{% url 'class_session_create' part.id %}"
+        class="btn btn-success btn-sm"
+        >+ New Class</a
+      >
+      <a
+        href="{% url 'class_test_create' part.id %}"
+        class="btn btn-warning btn-sm"
+        >+ New CT</a
+      >
+      <a href="{% url 'exam_create' part.id %}" class="btn btn-info btn-sm"
+        >+ New Exam</a
+      >
+      <a href="{% url 'teacher_part_list'%}" class="btn btn-success btn-sm"
+        >Profile</a
+      >
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>No</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Topic</th>
+            <th>Type</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for session in sessions %}
+          <tr class="session-{{ session.type }}">
+            <td>{{ forloop.counter }}</td>
+            <td>{{ session.date }}</td>
+            <td>{{ session.time }}</td>
+            <td>{{ session.topic }}</td>
+            <td class="text-uppercase">{{ session.type }}</td>
+            <td>
+              {% if session.type == 'class' %}
+              <a
+                href="{% url 'class_session_edit' session.id %}"
+                class="text-primary"
+                >Edit</a
+              >
+              |
+              <a
+                href="{% url 'class_session_delete' session.id %}"
+                class="text-danger"
+                >Delete</a
+              >
+              {% elif session.type == 'ct' %}
+              <a
+                href="{% url 'class_test_edit' session.id %}"
+                class="text-primary"
+                >Edit</a
+              >
+              |
+              <a
+                href="{% url 'class_test_delete' session.id %}"
+                class="text-danger"
+                >Delete</a
+              >
+              {% elif session.type == 'exam' %}
+              <a href="{% url 'exam_edit' session.id %}" class="text-primary"
+                >Edit</a
+              >
+              |
+              <a href="{% url 'exam_delete' session.id %}" class="text-danger"
+                >Delete</a
+              >
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6">No session found.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center my-3">
+        <nav>
+          <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+              <a
+                class="page-link"
+                href="?page={{ page_obj.previous_page_number }}"
+                >Previous</a
+              >
+            </li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+            {% if num > page_obj.number|add:'-3' %} {% if num < page_obj.number|add:'3' %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+              <span class="page-link">{{ num }}</span>
+            </li>
+            {% else %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+           
+            {% if page_obj.has_next %}
+            <li class="page-item">
+              <a class="page-link" href="?page={{ page_obj.next_page_number }}"
+                >Next</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>
+
